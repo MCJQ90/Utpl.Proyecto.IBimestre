@@ -1,75 +1,93 @@
-workspace "Plataforma de gestion de titulos"  {
-    description "Sistema de gestión de titulos"
-    
+workspace "Contador en Línea para PYMEs" {
+    description "Sistema para automatizar el proceso de declaracion de impuesto a la renta para PYMES."
+
     model {
-        pEstudiante = person "Estudiante"
-        pSecretaria = person "Secretaria de carrera"
-        pPrencista = person "Prencista"
-        
-        sSenescyt = softwareSystem "Senescyt" {
-            tags "Software"
+        pCliente = person "Cliente"
+        pAsistente = person "Asistente Contable"
+        pContador = person "Contador"
+
+        sSRI = softwareSystem "Sistema del SRI" {
+            tags "Externo"
         }
-        
-        sGestion = softwareSystem "Plataforma de gestion" {
-            tags "SistemaGestion"
-            
-            portalEstudiante = container "Pagina de visualización" {
-                tags "AppWeb"
-                pEstudiante  -> this "Visualiza el título"
+
+        sContador = softwareSystem "Contador en Línea" {
+            tags "SistemaContador"
+
+            portalCliente = container "Portal del Cliente" {
+                tags "AppMovil"
+                pCliente -> this "Solicita servicio, consulta estado"
             }
-            
-            portalAdministracion = container "Pagina de administración" {
+
+            portalInterno = container "Portal Interno" {
                 tags "AppWeb"
-                pSecretaria -> this "Generación de título"
-                pPrencista -> this "Imprime el título"
+                pAsistente -> this "Ingresa información y genera proforma"
+                pContador -> this "Revisa conciliaciones y valida declaración"
             }
-            
-            api = container "API" {
+
+            apiContador = container "API del sistema" {
                 tags "Api"
-                portalAdministracion -> this "Generacion/Impresion"
-                portalEstudiante -> this "Consulta"
-                this -> sSenescyt "Autorizar"
+                portalCliente -> this "Envía y consulta datos"
+                portalInterno -> this "Envía y consulta datos"
+                this -> sSRI "Consulta y envía declaraciones"
                 
-                
-                emailComponente  = component "Email-componente" "Envia notificaciones a los estudiantes"
-                
-                incresoComponente = component "Controlador de ingreso" "Permite el ingreso a los usuarios"
+                asignacionComponente = component "Componente de Asignación" "Asigna tareas automáticamente al asistente disponible"
+                estadoComponente = component "Componente de Estado del Proceso" "Informa al cliente sobre el estado de su solicitud"
+
             }
-            
-            basedatos = container "Base de datos" {
+
+            baseDatos = container "Base de Datos del sistema" {
                 tags "Database"
-                api -> this "Obtener/Crear/Actualizar/Eliminar"
+                apiContador -> this "CRUD sobre clientes, solicitudes, ingresos, gastos, conciliaciones y declaraciones"
             }
         }
-        
-    
-        
     }
-    
+
     views {
-        systemContext sGestion {
+        systemContext sContador {
+            include *
+            autolayout lr
+        }
+
+        container sContador {
             include *
             autolayout lr
         }
         
-        container sGestion {
+        component apiContador {
             include *
             autolayout lr
         }
-        
-        component api "Componentes" {
-            include *
-            autolayout lr
-        }
-        
+
         styles {
-            element "SistemaGestion" {
-                shape Circle
-                background #19b92a
+            element "SistemaContador" {
+                shape RoundedBox
+                background #206BA4
+                color #ffffff
+            }
+
+            element "AppMovil" {
+                shape MobileDevicePortrait
+                background #91C9F7
                 color #000000
             }
+
+            element "Api" {
+                shape Hexagon
+            }
+
+            element "Database" {
+                shape Cylinder
+                background #6FCF97
+            }
+
+            element "Externo" {
+                shape Box
+                background #42a5f5
+                color #ffffff
+            }
         }
-        
+
         theme "https://srv-si-001.utpl.edu.ec/REST_PRO_ERP/Recursos/Imagenes/themeAZ_2023.json"
     }
 }
+
