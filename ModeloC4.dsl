@@ -32,6 +32,7 @@ workspace "Contador en Línea para PYMEs" {
                 
                 asignacionComponente = component "Componente de Asignación" "Asigna tareas automáticamente al asistente disponible"
                 estadoComponente = component "Componente de Estado del Proceso" "Informa al cliente sobre el estado de su solicitud"
+                conciliacionComponente = component "Conciliación Tributaria" "Calcula automáticamente base imponible, retenciones e impuesto a pagar"
 
             }
 
