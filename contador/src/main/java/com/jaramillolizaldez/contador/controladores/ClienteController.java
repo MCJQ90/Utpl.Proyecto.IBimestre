@@ -1,18 +1,28 @@
 package com.jaramillolizaldez.contador.controladores;
 
-
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import com.jaramillolizaldez.contador.dtos.ClienteDto;
+import com.jaramillolizaldez.contador.servicios.ClienteServicio;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/clientes")
 public class ClienteController {
-    @GetMapping("/Hola")
-    public String hola() {
-        return "Hola, mundo!";
+
+    @Autowired
+    private ClienteServicio clienteServicio;
+
+    // GET - Obtener todos los clientes
+    @GetMapping
+    public List<ClienteDto> listarClientes() {
+        return clienteServicio.obtenerTodosLosClientes();
     }
-    
+
+    // POST - Crear un nuevo cliente
+    @PostMapping
+    public ClienteDto crearCliente(@RequestBody ClienteDto clienteDto) {
+        return clienteServicio.crearCliente(clienteDto);
+    }
 }
