@@ -1,31 +1,25 @@
 package com.jaramillolizaldez.contador.dtos;
 
 public class ClienteDto {
-    private String nombre;
     private String identificacion;
+    private String nombre;
     private String correo;
 
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
+    public ClienteDto(String identificacion, String nombre, String correo) {
+        this.identificacion = identificacion;
         this.nombre = nombre;
+        this.correo = correo;
     }
 
     public String getIdentificacion() {
         return identificacion;
     }
 
-    public void setIdentificacion(String identificacion) {
-        this.identificacion = identificacion;
+    public String getNombre() {
+        return nombre;
     }
 
     public String getCorreo() {
         return correo;
-    }
-
-    public void setCorreo(String correo) {
-        this.correo = correo;
     }
 }
