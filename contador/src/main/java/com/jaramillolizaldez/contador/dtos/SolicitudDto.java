@@ -22,4 +22,9 @@ public class SolicitudDto {
     public String getEstado() {
         return estado;
     }
+
+    public String getEmail() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getEmail'");
+    }
 }

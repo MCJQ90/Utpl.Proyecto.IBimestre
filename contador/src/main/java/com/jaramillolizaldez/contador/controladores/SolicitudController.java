@@ -2,9 +2,12 @@ package com.jaramillolizaldez.contador.controladores;
 
 import com.jaramillolizaldez.contador.dtos.SolicitudDto;
 import com.jaramillolizaldez.contador.entidades.Solicitud;
+import com.jaramillolizaldez.contador.servicios.EmailService;
 import com.jaramillolizaldez.contador.servicios.SolicitudService;
 
+import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,12 +15,26 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Arrays;
 import java.util.List;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequestMapping("/api/solicitudes")
 public class SolicitudController {
     @Autowired
     private SolicitudService solicitudService;
+
+    @Autowired
+    private EmailService emailService;
+
+    @PostMapping("/crear_solicitud")
+    public ResponseEntity<String> crearSolicitud(@RequestBody SolicitudDto SolicitudDto) {
+        SolicitudDto solicitud = solicitudService.crearSolicitud(SolicitudDto);
+        emailService.enviarCorreo(SolicitudDto.getEmail(), "Nueva Solicitud Creada",
+                "Se ha creado una nueva solicitud para el cliente: " + solicitud.getCliente());
+        return ResponseEntity.status(Response.SC_CREATED)
+                .body("Solicitud creada con éxito: " + solicitud.getId());
+    }
 
     @GetMapping
     public List<SolicitudDto> obtenerSolicitudes() {
