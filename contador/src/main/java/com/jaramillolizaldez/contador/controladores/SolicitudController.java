@@ -31,17 +31,17 @@ public class SolicitudController {
     public ResponseEntity<String> crearSolicitud(@RequestBody SolicitudDto SolicitudDto) {
         SolicitudDto solicitud = solicitudService.crearSolicitud(SolicitudDto);
         emailService.enviarCorreo(SolicitudDto.getEmail(), "Nueva Solicitud Creada",
-                "Se ha creado una nueva solicitud para el cliente: " + solicitud.getCliente());
+                "Se ha creado una nueva solicitud para el cliente: " + solicitud.getRazonSocial());
         return ResponseEntity.status(Response.SC_CREATED)
-                .body("Solicitud creada con éxito: " + solicitud.getId());
+                .body("Solicitud creada con éxito: " + solicitud.getRazonSocial());
     }
 
     @GetMapping
     public List<SolicitudDto> obtenerSolicitudes() {
-        return Arrays.asList(
-                new SolicitudDto("SOL-001", "Jorge Armando Jaramillo", "Ingresando información"),
+        return Arrays.asList();
+                /*new SolicitudDto("SOL-001", "Jorge Armando Jaramillo", "Ingresando información"),
                 new SolicitudDto("SOL-002", "Roberth Ordoñez Vivanco", "Pendiente de pago"),
-                new SolicitudDto("SOL-003", "Joofre Honores Tapia", "Finalizada con éxito"));
+                new SolicitudDto("SOL-003", "Joofre Honores Tapia", "Finalizada con éxito"));*/
     }
 
     // Obtener una solicitud por identificacion

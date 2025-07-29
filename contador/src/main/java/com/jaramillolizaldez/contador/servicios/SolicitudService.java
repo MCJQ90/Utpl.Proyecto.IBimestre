@@ -22,8 +22,15 @@ public class SolicitudService implements ISolicitudService {
 
 
     public SolicitudDto crearSolicitud(SolicitudDto solicitudDto) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'crearSolicitud'");
+        Solicitud solicitud = new Solicitud();
+        solicitud.setIdentificacion(solicitudDto.getIdentificacion());
+        solicitud.setRazonSocial(solicitudDto.getRazonSocial());
+        solicitud.setEmail(solicitudDto.getEmail());
+        solicitud.setTelefono(solicitudDto.getTelefono());
+        solicitud.setServicio(solicitudDto.getServicio());
+        solicitud.setAñoFiscal(solicitudDto.getAñoFiscal());
+        solicitudRepository.save(solicitud);
+        return solicitudDto;
     }
 
    
