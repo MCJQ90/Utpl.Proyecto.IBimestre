@@ -17,11 +17,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Arrays;
+//import java.util.Arrays;
 import java.util.List;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+//import org.springframework.web.bind.annotation.RequestParam;
 
 
 @RestController
@@ -44,19 +44,15 @@ public class SolicitudController {
     }
 
     @GetMapping
+    @Operation(summary = "Obtener todas las solicitudes")
+    @Tag(name = "Solicitudes")
     public List<SolicitudDto> obtenerSolicitudes() {
-        return Arrays.asList();
+        return solicitudService.obtenerTodasLasSolicitudesDto(); 
                 /*new SolicitudDto("SOL-001", "Jorge Armando Jaramillo", "Ingresando información"),
                 new SolicitudDto("SOL-002", "Roberth Ordoñez Vivanco", "Pendiente de pago"),
                 new SolicitudDto("SOL-003", "Joofre Honores Tapia", "Finalizada con éxito"));*/
     }
 
-    @GetMapping("/")
-    @Operation(summary = "Obtener todas las solicitudes")
-    @Tag(name = "Solicitudes")
-    public List<Solicitud> getAllSolicitudes() {
-        return solicitudService.getAllSolicitudes(); // Retorna la lista de solicitudes
-    }
     
 
     // Obtener una solicitud por identificacion

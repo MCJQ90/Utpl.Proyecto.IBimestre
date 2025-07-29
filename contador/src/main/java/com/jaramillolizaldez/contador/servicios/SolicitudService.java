@@ -1,6 +1,7 @@
 package com.jaramillolizaldez.contador.servicios;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,10 +35,12 @@ public class SolicitudService implements ISolicitudService {
     }
 
 
-    public List<Solicitud> getAllSolicitudes() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAllSolicitudes'");
+    public List<SolicitudDto> obtenerTodasLasSolicitudesDto() {
+        return solicitudRepository.findAll().stream()
+                .map(this::convertirASolicitudDto)
+                .collect(Collectors.toList());
     }
 
-   
+
+      
 }
