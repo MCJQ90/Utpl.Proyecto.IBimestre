@@ -41,6 +41,17 @@ public class SolicitudService implements ISolicitudService {
                 .collect(Collectors.toList());
     }
 
+    private SolicitudDto convertirASolicitudDto(Solicitud solicitud) {
+    SolicitudDto dto = new SolicitudDto();
+    dto.setIdentificacion(solicitud.getIdentificacion());
+    dto.setRazonSocial(solicitud.getRazonSocial());
+    dto.setEmail(solicitud.getEmail());
+    dto.setTelefono(solicitud.getTelefono());
+    dto.setServicio(solicitud.getServicio());
+    dto.setAñoFiscal(solicitud.getAñoFiscal());
+    return dto;
+}
+
 
       
 }
