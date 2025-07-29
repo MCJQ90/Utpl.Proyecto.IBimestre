@@ -7,7 +7,7 @@ import com.jaramillolizaldez.contador.servicios.SolicitudService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.experimental.var;
+
 
 import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
