@@ -61,8 +61,16 @@ public class SolicitudService implements ISolicitudService {
             .collect(Collectors.toList());
 }
 
+
+    public SolicitudDtoV2 crearSolicitudV2(SolicitudDtoV2 solicitudDtoV2) {
+        Solicitud solicitud = new Solicitud();
+        solicitud.setIdentificacion(solicitudDtoV2.getIdentificacion());
+        solicitud.setRazonSocial(solicitudDtoV2.getRazonSocial());
+        
+        solicitudRepository.save(solicitud);
+        return solicitudDtoV2;
+    }
+
     
-
-
       
 }
