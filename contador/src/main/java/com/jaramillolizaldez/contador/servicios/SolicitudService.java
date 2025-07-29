@@ -33,5 +33,11 @@ public class SolicitudService implements ISolicitudService {
         return solicitudDto;
     }
 
+
+    public List<Solicitud> getAllSolicitudes() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getAllSolicitudes'");
+    }
+
    
 }

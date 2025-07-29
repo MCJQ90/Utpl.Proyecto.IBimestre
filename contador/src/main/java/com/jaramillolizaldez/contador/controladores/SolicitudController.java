@@ -6,6 +6,8 @@ import com.jaramillolizaldez.contador.servicios.EmailService;
 import com.jaramillolizaldez.contador.servicios.SolicitudService;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.experimental.var;
 
 import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,8 @@ import java.util.Arrays;
 import java.util.List;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 @RequestMapping("/api/solicitudes")
@@ -46,6 +50,14 @@ public class SolicitudController {
                 new SolicitudDto("SOL-002", "Roberth Ordoñez Vivanco", "Pendiente de pago"),
                 new SolicitudDto("SOL-003", "Joofre Honores Tapia", "Finalizada con éxito"));*/
     }
+
+    @GetMapping("/")
+    @Operation(summary = "Obtener todas las solicitudes")
+    @Tag(name = "Solicitudes")
+    public List<Solicitud> getAllSolicitudes() {
+        return solicitudService.getAllSolicitudes(); // Retorna la lista de solicitudes
+    }
+    
 
     // Obtener una solicitud por identificacion
     @Operation(summary = "Buscar solicitud por identificación")
