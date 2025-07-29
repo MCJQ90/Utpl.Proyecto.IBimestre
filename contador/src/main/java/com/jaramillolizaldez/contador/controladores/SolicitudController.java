@@ -33,49 +33,56 @@ public class SolicitudController {
     @Autowired
     private EmailService emailService;
 
-@PostMapping("/v1")
-@Operation(summary = "Crear nueva solicitud con todos los datos")
-@Tag(name = "Solicitud", description = "Encargado de manejar las solicitudes de declaración")
-public ResponseEntity<String> crearSolicitud(@RequestBody SolicitudDto solicitudDto) {
-    // Crear y poblar entidad Solicitud desde el DTO
-    Solicitud solicitud = new Solicitud();
-    solicitud.setIdentificacion(solicitudDto.getIdentificacion());
-    solicitud.setRazonSocial(solicitudDto.getRazonSocial());
-    solicitud.setTelefono(solicitudDto.getTelefono());
-    solicitud.setEmail(solicitudDto.getEmail());
-    solicitud.setServicio(solicitudDto.getServicio());
-    solicitud.setAñoFiscal(solicitudDto.getAñoFiscal());
+    @PostMapping("/v1")
+    @Operation(summary = "Crear nueva solicitud con todos los datos")
+    @Tag(name = "Solicitud", description = "Encargado de manejar las solicitudes de declaración")
+    public ResponseEntity<String> crearSolicitud(@RequestBody SolicitudDto solicitudDto) {
+        // Crear y poblar entidad Solicitud desde el DTO
+        Solicitud solicitud = new Solicitud();
+        solicitud.setIdentificacion(solicitudDto.getIdentificacion());
+        solicitud.setRazonSocial(solicitudDto.getRazonSocial());
+        solicitud.setTelefono(solicitudDto.getTelefono());
+        solicitud.setEmail(solicitudDto.getEmail());
+        solicitud.setServicio(solicitudDto.getServicio());
+        solicitud.setAñoFiscal(solicitudDto.getAñoFiscal());
 
+        // Guardar la solicitud en la base de datos
+        solicitudService.crearSolicitud(solicitudDto);
 
-    // Enviar correo al cliente
-    emailService.enviarCorreo(
-            solicitudDto.getEmail(),
-            "Nueva Solicitud Creada",
-            "Se ha creado una nueva solicitud para el cliente: " + solicitud.getRazonSocial());
+        // Enviar correo al cliente
+        emailService.enviarCorreo(
+                solicitudDto.getEmail(),
+                "Nueva Solicitud Creada",
+                "Se ha creado una nueva solicitud para el cliente: " + solicitud.getRazonSocial());
 
-    // Retornar mensaje con status 201 CREATED
-    String mensaje = "Solicitud creada con éxito: " + solicitud.getRazonSocial();
-    return ResponseEntity.status(Response.SC_CREATED).body(mensaje);
-}
+        // Retornar mensaje con status 201 CREATED
+        String mensaje = "Solicitud creada con éxito: " + solicitud.getRazonSocial();
+        return ResponseEntity.status(Response.SC_CREATED).body(mensaje);
+    }
 
-@PostMapping("/v2")
-@Operation(summary = "Crear nueva solicitud con pocos datos")
-@Tag(name = "Solicitud", description = "Encargado de manejar las solicitudes de declaración")
-public ResponseEntity<String> crearSolicitudV2(@RequestBody SolicitudCreation solicitudDtoV2) {
-    Solicitud solicitud = new Solicitud();
-    solicitud.setIdentificacion(solicitudDtoV2.getIdentificacion());
-    solicitud.setRazonSocial(solicitudDtoV2.getRazonSocial());
-    solicitud.setEmail(solicitudDtoV2.getEmail()); // Solo lo que tiene V2
+    @PostMapping("/v2")
+    @Operation(summary = "Crear nueva solicitud con pocos datos")
+    @Tag(name = "Solicitud", description = "Encargado de manejar las solicitudes de declaración")
+    public ResponseEntity<SolicitudDtoV2> crearSolicitudV2(@RequestBody SolicitudCreation solicitudDtoV2) {
+        Solicitud solicitud = new Solicitud();
+        solicitud.setIdentificacion(solicitudDtoV2.getIdentificacion());
+        solicitud.setRazonSocial(solicitudDtoV2.getRazonSocial());
+        solicitud.setEmail(solicitudDtoV2.getEmail()); // Solo lo que tiene V2
 
+        // Guardar la solicitud en la base de datos
+        solicitudService.crearSolicitudV2(solicitudDtoV2);
 
-    // Enviar correo al cliente
-    emailService.enviarCorreo(
-            solicitudDtoV2.getEmail(),
-            "Nueva Solicitud Creada",
-            "Se ha creado una nueva solicitud para el cliente: " + solicitud.getRazonSocial());
+        // Enviar correo al cliente
+        emailService.enviarCorreo(
+                solicitudDtoV2.getEmail(),
+                "Nueva Solicitud Creada",
+                "Se ha creado una nueva solicitud para el cliente: " + solicitud.getRazonSocial());
 
-    return ResponseEntity.status(Response.SC_CREATED).body("Solicitud creada con éxito: " + solicitud.getRazonSocial());
-}
+        SolicitudDtoV2 respuesta = new SolicitudDtoV2(
+                solicitud.getIdentificacion(),
+                solicitud.getRazonSocial());
+        return ResponseEntity.status(Response.SC_CREATED).body(respuesta);
+    }
 
     @GetMapping("/v1")
     @Operation(summary = "Obtener todas las solicitudes")

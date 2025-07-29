@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.jaramillolizaldez.contador.dtos.SolicitudCreation;
 import com.jaramillolizaldez.contador.dtos.SolicitudDto;
 import com.jaramillolizaldez.contador.dtos.SolicitudDtoV2;
 import com.jaramillolizaldez.contador.entidades.Solicitud;
@@ -62,13 +63,18 @@ public class SolicitudService implements ISolicitudService {
 }
 
 
-    public SolicitudDtoV2 crearSolicitudV2(SolicitudDtoV2 solicitudDtoV2) {
+    public SolicitudCreation crearSolicitudV2(SolicitudCreation SolicitudCreation) {
         Solicitud solicitud = new Solicitud();
-        solicitud.setIdentificacion(solicitudDtoV2.getIdentificacion());
-        solicitud.setRazonSocial(solicitudDtoV2.getRazonSocial());
-        
+        solicitud.setIdentificacion(SolicitudCreation.getIdentificacion());
+        solicitud.setRazonSocial(SolicitudCreation.getRazonSocial());
+        solicitud.setEmail(SolicitudCreation.getEmail());
+        solicitud.setTelefono(SolicitudCreation.getTelefono());
+        solicitud.setServicio(SolicitudCreation.getServicio());
+        solicitud.setAñoFiscal(SolicitudCreation.getAñoFiscal());
+        solicitud.setObservaciones(SolicitudCreation.getObservaciones());
+                
         solicitudRepository.save(solicitud);
-        return solicitudDtoV2;
+        return SolicitudCreation;
     }
 
     

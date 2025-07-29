@@ -32,6 +32,7 @@ public class Solicitud implements Serializable {
     private Integer añoFiscal;
     private String fechaSolicitud;
     private String estado;
+    private String observaciones;
 
     
 }
