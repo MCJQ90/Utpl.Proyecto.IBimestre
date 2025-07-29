@@ -1,6 +1,7 @@
 package com.jaramillolizaldez.contador.controladores;
 
 import com.jaramillolizaldez.contador.dtos.SolicitudDto;
+import com.jaramillolizaldez.contador.dtos.SolicitudDtoV2;
 import com.jaramillolizaldez.contador.entidades.Solicitud;
 import com.jaramillolizaldez.contador.servicios.EmailService;
 import com.jaramillolizaldez.contador.servicios.SolicitudService;
@@ -43,7 +44,7 @@ public class SolicitudController {
                 .body("Solicitud creada con éxito: " + solicitud.getRazonSocial());
     }
 
-    @GetMapping
+    @GetMapping("/v1")
     @Operation(summary = "Obtener todas las solicitudes")
     @Tag(name = "Solicitudes")
     public List<SolicitudDto> obtenerSolicitudes() {
@@ -53,7 +54,15 @@ public class SolicitudController {
                 new SolicitudDto("SOL-003", "Joofre Honores Tapia", "Finalizada con éxito"));*/
     }
 
-    
+     @GetMapping("/v2")
+    @Operation(summary = "Obtener todas las solicitudes")
+    @Tag(name = "Solicitudes")
+    public List<SolicitudDtoV2> obtenerSolicitudesV2() {
+        return solicitudService.obtenerTodasLasSolicitudesDtoV2(); 
+                /*new SolicitudDto("SOL-001", "Jorge Armando Jaramillo", "Ingresando información"),
+                new SolicitudDto("SOL-002", "Roberth Ordoñez Vivanco", "Pendiente de pago"),
+                new SolicitudDto("SOL-003", "Joofre Honores Tapia", "Finalizada con éxito"));*/
+    }
 
     // Obtener una solicitud por identificacion
     @Operation(summary = "Buscar solicitud por identificación")

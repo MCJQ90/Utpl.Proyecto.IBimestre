@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.jaramillolizaldez.contador.dtos.SolicitudDto;
+import com.jaramillolizaldez.contador.dtos.SolicitudDtoV2;
 import com.jaramillolizaldez.contador.entidades.Solicitud;
 import com.jaramillolizaldez.contador.repositorios.SolicitudRepository;
 
@@ -51,6 +52,16 @@ public class SolicitudService implements ISolicitudService {
     dto.setAñoFiscal(solicitud.getAñoFiscal());
     return dto;
 }
+
+
+    public List<SolicitudDtoV2> obtenerTodasLasSolicitudesDtoV2() {
+        List<Solicitud> solicitudes = solicitudRepository.findAll();
+    return solicitudes.stream()
+            .map(s -> new SolicitudDtoV2(s.getIdentificacion(), s.getRazonSocial()))
+            .collect(Collectors.toList());
+}
+
+    
 
 
       
