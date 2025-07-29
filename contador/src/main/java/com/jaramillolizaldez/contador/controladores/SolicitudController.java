@@ -5,6 +5,8 @@ import com.jaramillolizaldez.contador.entidades.Solicitud;
 import com.jaramillolizaldez.contador.servicios.EmailService;
 import com.jaramillolizaldez.contador.servicios.SolicitudService;
 
+import io.swagger.v3.oas.annotations.Operation;
+
 import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +29,7 @@ public class SolicitudController {
     @Autowired
     private EmailService emailService;
 
+    @Operation(summary = "Crear una nueva solicitud")
     @PostMapping("/crear_solicitud")
     public ResponseEntity<String> crearSolicitud(@RequestBody SolicitudDto SolicitudDto) {
         SolicitudDto solicitud = solicitudService.crearSolicitud(SolicitudDto);
@@ -45,6 +48,7 @@ public class SolicitudController {
     }
 
     // Obtener una solicitud por identificacion
+    @Operation(summary = "Buscar solicitud por identificación")
     @GetMapping("/busqueda/{identificacion}")
     public List<Solicitud> getListaSolicitudByIdentificacion(@PathVariable String identificacion) {
         var solicitudes = solicitudService.BuscarPorIdentificacion(identificacion);
