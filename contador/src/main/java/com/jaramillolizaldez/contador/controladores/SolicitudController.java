@@ -59,7 +59,7 @@ public class SolicitudController {
     @Operation(summary = "Buscar solicitud por identificación")
     @GetMapping("/busqueda/{identificacion}")
     public List<Solicitud> getListaSolicitudByIdentificacion(@PathVariable String identificacion) {
-        var solicitudes = solicitudService.BuscarPorIdentificacion(identificacion);
+        List<Solicitud> solicitudes = solicitudService.BuscarPorIdentificacion(identificacion);
         if (solicitudes.isEmpty()) {
             return null; // O lanzar una excepción si no se encuentra
         }
