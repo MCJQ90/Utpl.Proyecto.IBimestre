@@ -89,12 +89,7 @@ public class SolicitudController {
     @Tag(name = "Solicitudes")
     public List<SolicitudDto> obtenerSolicitudes() {
         return solicitudService.obtenerTodasLasSolicitudesDto();
-        /*
-         * new SolicitudDto("SOL-001", "Jorge Armando Jaramillo",
-         * "Ingresando información"),
-         * new SolicitudDto("SOL-002", "Roberth Ordoñez Vivanco", "Pendiente de pago"),
-         * new SolicitudDto("SOL-003", "Joofre Honores Tapia", "Finalizada con éxito"));
-         */
+        
     }
 
     @GetMapping("/v2")
